@@ -1,0 +1,25 @@
+{
+  "name": "actionflow",
+  "version": "0.1.0",
+  "private": true,
+  "description": "ActionFlow converts meeting notes into trackable action items and helps teams manage follow-ups.",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --workspace server\" \"npm run dev --workspace client\"",
+    "build": "npm run build --workspace server && npm run build --workspace client",
+    "lint": "npm run lint --workspace server && npm run lint --workspace client",
+    "prisma:generate": "prisma generate --schema prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema prisma/schema.prisma",
+    "prisma:deploy": "prisma migrate deploy --schema prisma/schema.prisma"
+  },
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "prisma": "^6.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

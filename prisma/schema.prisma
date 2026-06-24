@@ -1,0 +1,54 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TaskStatus {
+  OPEN
+  IN_PROGRESS
+  DONE
+}
+
+model User {
+  id        String    @id @default(cuid())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  meetings  Meeting[]
+
+  @@map("users")
+}
+
+model Meeting {
+  id        String   @id @default(cuid())
+  title     String
+  notes     String
+  createdBy String
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  tasks     Task[]
+
+  @@index([createdBy])
+  @@map("meetings")
+}
+
+model Task {
+  id        String     @id @default(cuid())
+  title     String
+  owner     String
+  dueDate   DateTime
+  status    TaskStatus @default(OPEN)
+  meetingId String
+  createdAt DateTime   @default(now())
+  meeting   Meeting    @relation(fields: [meetingId], references: [id], onDelete: Cascade)
+
+  @@index([meetingId])
+  @@index([status])
+  @@index([dueDate])
+  @@map("tasks")
+}
