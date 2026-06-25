@@ -21,12 +21,15 @@ const publicUserSelect = {
   email: true,
   createdAt: true
 };
-
 const signAccessToken = (user: { id: string; email: string }) => {
-  return jwt.sign({ email: user.email }, env.JWT_SECRET, {
-    subject: user.id,
-    expiresIn: env.JWT_EXPIRES_IN
-  });
+  return jwt.sign(
+    { email: user.email },
+    env.JWT_SECRET,
+    {
+      subject: user.id,
+      expiresIn: "7d"
+    }
+  );
 };
 
 export const authService = {
