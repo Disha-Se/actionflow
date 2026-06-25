@@ -16,12 +16,18 @@ export const createMeeting = async (req: Request, res: Response) => {
 
 export const getMeeting = async (req: Request, res: Response) => {
   const { user } = req as AuthenticatedRequest;
-  const meeting = await meetingService.getMeeting(user.id, req.params.id);
+  const meeting = await meetingService.getMeeting(
+  user.id,
+  req.params.id!
+);
   res.status(200).json({ meeting });
 };
 
 export const deleteMeeting = async (req: Request, res: Response) => {
   const { user } = req as AuthenticatedRequest;
-  await meetingService.deleteMeeting(user.id, req.params.id);
+  await meetingService.deleteMeeting(
+  user.id,
+  req.params.id!
+);
   res.status(204).send();
 };
