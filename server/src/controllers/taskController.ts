@@ -16,12 +16,19 @@ export const createTask = async (req: Request, res: Response) => {
 
 export const updateTask = async (req: Request, res: Response) => {
   const { user } = req as AuthenticatedRequest;
-  const task = await taskService.updateTask(user.id, req.params.id, req.body);
+  const task = await taskService.updateTask(
+  user.id,
+  req.params.id!,
+  req.body
+);
   res.status(200).json({ task });
 };
 
 export const deleteTask = async (req: Request, res: Response) => {
   const { user } = req as AuthenticatedRequest;
-  await taskService.deleteTask(user.id, req.params.id);
+  await taskService.deleteTask(
+  user.id,
+  req.params.id!
+);
   res.status(204).send();
 };
